@@ -13,7 +13,7 @@ type (
 		LockState(key string)
 	}
 
-	redLock struct {
+	RedLock struct {
 		Keys             []string
 		Tag              string
 		HeartBeatSeconds int
@@ -28,7 +28,7 @@ func NewRedLock(redisconn *redis.Client, heartBeatSeconds int, tag string, keys 
 
 	go heartBeat(tag, heartBeatSeconds, redisconn)
 
-	return &redLock{
+	return &RedLock{
 		Keys:             keys,
 		Tag:              tag,
 		HeartBeatSeconds: heartBeatSeconds,
@@ -36,11 +36,11 @@ func NewRedLock(redisconn *redis.Client, heartBeatSeconds int, tag string, keys 
 	}
 }
 
-func (r *redLock) SetNX(key string, tag string)
+func (r *RedLock) SetNX(key string, tag string)
 
-func (r *redLock) DelNX(key string, tag string)
+func (r *RedLock) DelNX(key string, tag string)
 
-func (r *redLock) LockState(key string)
+func (r *RedLock) LockState(key string)
 
 func heartBeat(tag string, heartBeatSeconds int, redisconn *redis.Client) {
 	for {
